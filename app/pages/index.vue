@@ -18,7 +18,11 @@ const queryParams = ref<any>({
   aoId: null,
 });
 
-const fundTypeMenu = [{ label: "All", value: 0 }];
+const fundTypeMenu = [
+  { label: "All", value: 0 },
+  { label: "One", value: 1 },
+  { label: "Two", value: 2 },
+];
 
 const currentTab = ref("customer-info");
 const changeCurrentTab = (tab: string) => {
@@ -37,14 +41,14 @@ const getCustomerInfo = async () => {
   queryParams.value.fundType = fundType.value;
   queryParams.value.aoId = aoId.value;
 
-  if (queryParams.value.portCode.trim() == "")
-    delete queryParams.value.portCode;
-  if (queryParams.value.fundType == 0) delete queryParams.value.fundType;
-  if (queryParams.value.aoId == null || queryParams.value.aoId == "")
-    delete queryParams.value.aoId;
+  // if (queryParams.value.portCode.trim() == "")
+  //   delete queryParams.value.portCode;
+  // if (queryParams.value.fundType == 0) delete queryParams.value.fundType;
+  // if (queryParams.value.aoId == null || queryParams.value.aoId == "")
+  //   delete queryParams.value.aoId;
 
   data.value = await $fetch<{ data: any }>(
-    "/backend/api/customer/getCustomer",
+    "http://localhost:3030/api/customer/getCustomer",
     {
       method: "GET",
       query: queryParams.value,
@@ -294,7 +298,7 @@ const toLastPage = () => (page.value = pageCount.value);
   border-top: 1px solid #e5e7eb;
   border-right: 1px solid #e5e7eb;
   vertical-align: middle;
-  padding-top: 8px;
+  padding-top: 7.5px;
   padding-bottom: 8px;
   line-height: calc(var(--row-h) - 16px);
 }
